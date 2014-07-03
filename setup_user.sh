@@ -4,6 +4,7 @@
 #  - symlink to genomes directory
 #  - symlink to galaxy app directory
 #  - public_html directory with nginx forwarding
+#  - private_html directory with nginx forwarding
 #  - configure an ipython notebook profile for secure access over the web
 #  - add script galaxy-fuse.py to use for direct access to Galaxy datasets
 #
@@ -39,6 +40,13 @@ sudo usermod -a -G fuse $username
 # configured into NGINX using configure_nginx.sh
 echo "\n** Creating a public_html directory for user "$username
 sudo sh add_public_html.sh $username
+
+# Set up private_html redirect for user at http://ip-addr/public/us.
+# This is dependent on an already existing
+# /usr/nginx/conf/private_html.conf (which may be empty)
+# configured into NGINX using configure_nginx.sh
+echo "\n** Creating a private_html directory for user "$username
+sudo sh add_private_html.sh $username
 
 # Add symlink to genomes directory on CloudMan instances
 echo "\n** Creating a symlink to Galaxy reference genomes for "$username
