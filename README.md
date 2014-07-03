@@ -80,8 +80,13 @@ directory will be _publicly_ accessible at
 
     http://<your-ip-address>/public/researcher/<filename>
 
-If you create extra user accounts using `setup_user.sh`, each account will get a similar folder which redirects
-to a URL as above, with `researcher` replaced by the relevant username.
+A **password proteced ** per-user **web-accessible folder** can be found at `~/private_html` . Any files you place in this
+directory will be viewable with a users password. 
+
+    http://<your-ip-address>/private/researcher/<filename>
+
+If you create extra user accounts using `setup_user.sh`, each account will get a similar folders which redirects
+to URLs as above, with `researcher` replaced by the relevant username.
 
 **RStudio** is accessible at
 
@@ -169,7 +174,7 @@ locations.
 
 ### configure_nginx.sh
 
-Set up NGINX config file structure necessary to configure RStudio, public_html, and
+Set up NGINX config file structure necessary to configure RStudio, public_html, private_html, and
 IPython Notebook.
 
 This script is intended to run on GVL image v2.19 or later. It assumes that the
@@ -232,6 +237,16 @@ Create a public_html directory and redirect for the specified user.
 Usage:
 
     sudo sh add_public_html.sh <username>
+
+Requires superuser permissions. Assumes that `configure_nginx.sh` has been run.
+
+### add_private_html.sh
+
+Create a private_html directory and redirect for the specified user.
+
+Usage:
+
+    sudo sh add_private_html.sh <username>
 
 Requires superuser permissions. Assumes that `configure_nginx.sh` has been run.
 
