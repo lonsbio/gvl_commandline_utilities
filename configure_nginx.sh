@@ -29,11 +29,13 @@ conf_dir="/usr/nginx/conf"
 
 cat > $conf_dir"/commandline_utilities_http.conf" << END
 include public_html.conf;
+include private_html.conf;
 include rstudio_nginx.conf;
 END
 
 # Create empty files as placeholders so nginx won't see missing files
 touch $conf_dir"/public_html.conf"
+touch $conf_dir"/private_html.conf"
 touch $conf_dir"/rstudio_nginx.conf"
 
 
