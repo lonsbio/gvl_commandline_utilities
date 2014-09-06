@@ -9,9 +9,13 @@
 echo "Installing RStudio and dependencies"
 
 apt-get install gdebi-core
-wget http://download2.rstudio.org/rstudio-server-0.98.501-amd64.deb
-yes | gdebi rstudio-server-0.98.501-amd64.deb
-rm rstudio-server-0.98.501-amd64.deb
+if [ $(dpkg -s rstudio-server | grep "^Status.*ok" | wc -l) != '1' ]; then
+  wget http://download2.rstudio.org/rstudio-server-0.98.501-amd64.deb
+  yes | gdebi rstudio-server-0.98.501-amd64.deb
+  rm rstudio-server-0.98.501-amd64.deb
+else
+  echo "rstudio-server already installed; not installing."
+fi
 
 echo "Writing NGINX config for RStudio"
 
@@ -27,10 +31,12 @@ END
 
 echo "Configuring RStudio"
 
-# Configure RStudio to allow only rstudio_users accounts, 
+# Configure RStudio to allow only rstudio_users accounts,
 # which should not include superusers
 
-addgroup rstudio_users
+if [ $(getent group rstudio_users | wc -l) = '0' ]; then
+  addgroup rstudio_users
+fi
 
 cat > /etc/rstudio/rserver.conf << END
 auth-required-user-group=rstudio_users
