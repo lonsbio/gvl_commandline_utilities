@@ -91,3 +91,7 @@ sudo su $username -c 'python setup_ipython_server.py'
 # Write out user README file
 echo "\n** Writing ~/README.txt for "$username" - please consult for setup details.\n"
 sudo su $username -c 'python write_readme.py'
+
+# Write out user private dashboard file
+echo "\n** Writing ~/private_html/index.html for "$username".\n"
+sudo su $username -c 'python write_dashboard.py'
