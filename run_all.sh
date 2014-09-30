@@ -16,6 +16,7 @@ They will:
   - install and configure RStudio Server
   - configure IPython Notebook for secure web access
   - set up public_html directories
+  - setup shared dashboard under ubuntu user
 A new non-sudo account called 'researcher' will be created to use these utilities.
 "
 
@@ -23,6 +24,8 @@ A new non-sudo account called 'researcher' will be created to use these utilitie
 echo "$introduction"
 echo "Press enter to continue (or Ctrl-C to abort):"
 read _input
+
+sudouser="ubuntu"
 
 # Create modules from Galaxy Toolshed tools
 # NB use sudo -E so that sudo keeps the MODULE environment variables
@@ -39,6 +42,15 @@ sudo sh setup_rstudio.sh
 
 # Add the default non-sudo account 'researcher'
 sh setup_user.sh researcher
+
+# Set up private_html redirect for user at http://ip-addr/dashboard
+# /usr/nginx/conf/private_html.conf (which may be empty)
+echo "\n** Creating a private_html directory for user "
+sudo sh add_private_html.sh $sudouser
+# Write out user private dashboard file
+echo "\n** Writing ~/private_html/index.html for "$sudouser".\n"
+sudo su $sudouser -c 'python write_dashboard.py'
+
 
 # Print out getting-started info
 info="
