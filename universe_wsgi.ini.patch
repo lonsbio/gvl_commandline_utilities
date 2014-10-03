@@ -1,0 +1,9 @@
+--- /home/ubuntu/galaxy/universe_wsgi.ini.orig	2014-10-03 16:27:26.000000000 +1000
++++ /home/ubuntu/galaxy/universe_wsgi.ini	2014-10-03 16:30:09.000000000 +1000
+@@ -54,3 +54,5 @@
+ allow_user_dataset_purge = True
+-enable_openid = True
++enable_openid = False
++require_login = True
++allow_user_creation = False
+ enable_unique_workflow_defaults = True
